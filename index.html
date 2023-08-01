@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>aqui van cosas</h1>
+    <div id="contenido">
+
+    </div>
+    <script>
+        const contenido=document.getElementById("contenido")
+
+        fetch("https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/joke/joke?a=12",
+        {
+            method:'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'X-Require-Whisk-AUth':'Ve3pfkzHNl2COVJ'
+            }
+        }).then(
+            response => response.json()
+        ).then(data => contenido.innerHTML=data.text)
+    </script>
+</body>
+</html>
