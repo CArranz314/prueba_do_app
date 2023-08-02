@@ -31,7 +31,6 @@
             headers:{
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'X-Require-Whisk-AUth':'Ve3pfkzHNl2COVJ'
             }
         }).then(
             response => response.json()
@@ -75,22 +74,19 @@
             let o = {
                             "ID_cliente": 989,
                             "nabos": 0,
-                            "Tomate (kg)": 10000,
+                            "Tomate (kg)": 100010,
                             "zanahorias": 5
                             };
             let s = new URLSearchParams(Object.entries(o)).toString();
             console.log(s); 
             fetch(
-                "https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/google-spread-send-form/google-spread-send-form",
+                "https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/google-spread-send-form/google-spread-send-form?"+s,
                 {
                     method:'POST',
                     headers:{
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
-                    'X-Require-Whisk-Auth':'Oa2Qc1ON0f47BlN'
                     },
-                    body: s
-                    
                 }
             ).then(response => response.json()).then(data=>console.log(data))
             console.log("formulario enviado")
