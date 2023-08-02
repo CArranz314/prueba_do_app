@@ -35,7 +35,7 @@
             }
         }).then(
             response => response.json()
-        ).then(data => contenido.innerHTML=data.text)
+        ).then(data => contenido.innerHTML=data.text+"<br>"+data.respuesta)
 
         fetch("https://ams3.digitaloceanspaces.com/iort-test/datapruebas23.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=L3AZFBVPZPRCJRLMEIXU%2F20230801%2Fams3%2Fs3%2Faws4_request&X-Amz-Date=20230801T125959Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=1d70e1cd40412780f11dcaa83b9d15c7a6ccf2052b7a9d5f98a15eb434675cd8",
         {
@@ -72,8 +72,16 @@
             )
 */
         function enviarformulario(){
+            let o = {
+                            "ID_cliente": 989,
+                            "nabos": 0,
+                            "Tomate (kg)": 10000,
+                            "zanahorias": 5
+                            };
+            let s = new URLSearchParams(Object.entries(o)).toString();
+            console.log(s); 
             fetch(
-                "https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/google-spread/google-spread",
+                "https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/google-spread-send-form/google-spread-send-form",
                 {
                     method:'POST',
                     headers:{
@@ -81,14 +89,8 @@
                     'Access-Control-Allow-Origin': '*',
                     'X-Require-Whisk-Auth':'Oa2Qc1ON0f47BlN'
                     },
-                    body:{
-                        "form": {
-                            "ID_cliente": 989,
-                            "nabos": 0,
-                            "Tomate (kg)": 10000,
-                            "zanahorias": 5
-                            }
-                    }
+                    body: s
+                    
                 }
             ).then(response => response.json()).then(data=>console.log(data))
             console.log("formulario enviado")
