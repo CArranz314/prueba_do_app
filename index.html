@@ -7,23 +7,92 @@
 </head>
 <body>
     <h1>aqui van cosas</h1>
-    <div id="contenido">
-
-    </div>
+    <div id="contenido"></div>
+    <br>
+    <div id="conteni2"></div>
+    <button onclick="enviarformulario()">ENVIAR</button>
+    
     <script>
+        //const corsAnywhere="https://cors-anywhere.herokuapp.com/"
         const contenido=document.getElementById("contenido")
-
+        const contenido2=document.getElementById("conteni2")
+        //var reader=new FileReader()
+/*
+        const toBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+*/
         fetch("https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/joke/joke?a=12",
         {
             method:'GET',
             headers:{
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'X-Require-Whisk-AUth':''
+                'X-Require-Whisk-AUth':'Ve3pfkzHNl2COVJ'
             }
         }).then(
             response => response.json()
         ).then(data => contenido.innerHTML=data.text)
+
+        fetch("https://ams3.digitaloceanspaces.com/iort-test/datapruebas23.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=L3AZFBVPZPRCJRLMEIXU%2F20230801%2Fams3%2Fs3%2Faws4_request&X-Amz-Date=20230801T125959Z&X-Amz-Expires=604800&X-Amz-SignedHeaders=host&X-Amz-Signature=1d70e1cd40412780f11dcaa83b9d15c7a6ccf2052b7a9d5f98a15eb434675cd8",
+        {
+            method:'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            }
+        }).then(
+            response => response.json()
+        ).then(data => {
+            var ingredientes=""
+            data.forEach(element => {
+                if (element.Disponible ==="X"){
+                ingredientes+="<span>"+element.Producto+"</span><br>"
+                }    
+            });
+            console.log(ingredientes)
+            contenido2.innerHTML=ingredientes
+        })
+
+/*
+        fetch("https://ams3.digitaloceanspaces.com/iort-test/covas-catalogo/campos.csv",
+        {
+            method:'GET',
+            headers:{
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+            }
+        }).then(
+            response => response.text()
+        ).then(
+            data => console.log(data)
+            )
+*/
+        function enviarformulario(){
+            fetch(
+                "https://faas-lon1-917a94a7.doserverless.co/api/v1/web/fn-cac95d08-002e-4c66-ad1b-cf8966a459fe/google-spread/google-spread",
+                {
+                    method:'POST',
+                    headers:{
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'X-Require-Whisk-Auth':'Oa2Qc1ON0f47BlN'
+                    },
+                    body:{
+                        "form": {
+                            "ID_cliente": 989,
+                            "nabos": 0,
+                            "Tomate (kg)": 10000,
+                            "zanahorias": 5
+                            }
+                    }
+                }
+            ).then(response => response.json()).then(data=>console.log(data))
+            console.log("formulario enviado")
+        }
     </script>
 </body>
 </html>
